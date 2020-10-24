@@ -1,0 +1,72 @@
+﻿<views:MvxWindowsPage
+    x:Class="DrawboardProjects.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrawboardProjects.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:MvvmCross.Platforms.Uap.Views"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Border x:Name="background">
+                    <Image Source="ms-appx:///Assets/Images/LoginBackground.jpg" 
+                           Stretch="UniformToFill" 
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" 
+                           Opacity="0.9" />
+                </Border>
+            </Grid>
+
+            <TextBox Grid.RowSpan="2" GotFocus="OnBackgroundFocus" Opacity="0" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="foreground" Grid.Row="1" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ValidationErrors}" 
+                               HorizontalAlignment="Center"
+                               Foreground="Red" />
+                    <Grid GotFocus="OnForegroundFocus">
+                        <local:UsernamePasswordControl
+                            x:Name="passwordView" HorizontalAlignment="Center"
+                            UserName="{Binding Username, Mode=TwoWay}" 
+                            Password="{Binding Password, Mode=TwoWay}"
+                            LoginWithPasswordCommand="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource BoolNegationConverter}}" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" IsHitTestVisible="False" />
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+
+                <HyperlinkButton Content="Drawboard Projects Home" 
+                                 NavigateUri="https://www.drawboard.com/projects/"
+                                 Foreground="#222" FontSize="15" 
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Border Grid.Row="1">
+                    <Image Margin="24" 
+                           Source="ms-appx:///Assets/Images/AppLogo.png" 
+                           Width="320" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           Stretch="Uniform" />
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</views:MvxWindowsPage>

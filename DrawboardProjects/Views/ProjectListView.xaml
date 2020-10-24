@@ -1,0 +1,74 @@
+﻿<views:MvxWindowsPage
+    x:Class="DrawboardProjects.Views.ProjectListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrawboardProjects.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:MvvmCross.Platforms.Uap.Views"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Height="48"
+              Background="LightGray"
+              Grid.Row="0">
+            <TextBlock Text="{Binding Title}"
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                       Margin="12,0,0,0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <Button HorizontalAlignment="Right" Background="Transparent">
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <muxc:PersonPicture Grid.Column="0"
+                                   Width="24"
+                                   Height="24"
+                                   DisplayName="{Binding UserDisplayName}"
+                                   Margin="0,0,6,0">
+                    </muxc:PersonPicture>
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding UserDisplayName}" />
+                </Grid>
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Sign out"
+                                                Command="{Binding LogoutCommand}"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+        <TextBlock Grid.Row="1" Text="You have no projects"
+                   Margin="12"
+                   FontStyle="Oblique"
+                   Visibility="{Binding NoProjectsMessageVisible}" />
+        <GridView Grid.Row="1"
+                  Margin="12"
+                  ItemsSource="{Binding Projects}"
+                  SelectedItem="{Binding SelectedProject, Mode=TwoWay}"
+                  ScrollViewer.HorizontalScrollMode="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.VerticalScrollMode="Enabled">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Height="280" Width="180" Margin="12">
+                        <Image Source="{Binding Logo}" Height="180" Width="180" Stretch="UniformToFill"/>
+                        <StackPanel Margin="0,12">
+                            <TextBlock Text="{Binding Name}" TextWrapping="WrapWholeWords"/>
+                            <TextBlock Text="{Binding Description}" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</views:MvxWindowsPage>
